@@ -6,9 +6,6 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 
-
-
-
 export default function LoginPage() {
     const router = useRouter();
     const [user, setUser] = React.useState({
@@ -66,6 +63,7 @@ export default function LoginPage() {
             onChange={(e) => setUser({...user, password: e.target.value})}
             placeholder="password"
             />
+            <Link href={"/sendforgot"}>Forgot Password ? </Link>
             <button
             onClick={onLogin}
             className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">Login here</button>
