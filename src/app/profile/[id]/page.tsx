@@ -1,12 +1,9 @@
-export default function UserProfile({params}: any) {
+export default async function UserProfilePage({params} : any) {
+    const id = await params.id;
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1>Profile</h1>
-            <hr />
-            <p className="text-4xl">Profile page 
-            <span className=" p-2 ml-2 rounded bg-orange-500 text-black">{params.id}</span>
-            </p>
-
-            </div>
-    )
-}
+            <h1 className="text-2xl font-bold">Profile</h1>
+            <p className="text-lg">User ID: {id}</p>
+        </div> 
+    );
+ }

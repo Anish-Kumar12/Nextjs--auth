@@ -1,39 +1,28 @@
-import {connect} from "@/dbConfig/dbConfig";
-import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/userModel";
+import {connect} from '@/dbconfig/dbconfig';
+import { NextRequest,NextResponse } from 'next/server';
+import User from '@/models/userModel';
+import { error } from 'console';
 
+connect();
 
-
-connect()
-
-
-export async function POST(request: NextRequest){
-
-    try {
-        const reqBody = await request.json()
-        const {token} = reqBody
+export async function POST(request : NextRequest){
+    try{
+        const reqbody = await request.json();
+        const {token} = reqbody;
         console.log(token);
 
-        const user = await User.findOne({verifyToken: token, verifyTokenExpiry: {$gt: Date.now()}});
-
-        if (!user) {
-            return NextResponse.json({error: "Invalid token"}, {status: 400})
+        const user = await User.findOne({verifyToken:token,verifyTokenExpire:{$gt:Date.now()}})
+        if(!user){
+            return NextResponse.json({error:"Invalid token"},{status:400});
         }
-        console.log(user);
-
-        user.isVerfied = true;
+        user.isVerified = true;
         user.verifyToken = undefined;
-        user.verifyTokenExpiry = undefined;
+        user.verifyTokenExpire = undefined;
         await user.save();
-        
-        return NextResponse.json({
-            message: "Email verified successfully",
-            success: true
-        })
 
-
-    } catch (error:any) {
-        return NextResponse.json({error: error.message}, {status: 500})
+        return NextResponse.json({message:"Email verified successfully"},{status:200});
+    }   
+    catch(e:any){
+        return NextResponse.json({message:e.message},{status:500});
     }
-
 }
